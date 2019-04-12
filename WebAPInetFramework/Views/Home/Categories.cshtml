@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Kategori";
+}
+
+<h2>Kategoriler</h2>
+
+<ol id="categoryList"></ol>
+
+
+Kategori Adı :  <input type="text" id="Name" />
+Kategori Açıklaması : <input type="text" id="Description" />
+<button id="post">Kaydet</button>
+
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            loadData();
+
+            $("#post").click(function () {
+                var name = $("#Name").val();
+                var description = $("#Description").val();
+                var category = { Name: name, Description: description };
+                $.post("/api/Category", category, function (result) {
+                    if (result == true) {
+                        alert("İşlem Başarılı");
+                        loadData();
+                    }
+                    else {
+                        alert("İşlem Başarısız");
+                    }
+
+                });
+            });
+
+            function loadData() {
+                $("#categoryList").empty();
+                $.get("/api/Category", function (data) {
+                    $.each(data, function (index, value) {
+                        $("#categoryList").append("<li>" + value.Name + "</li>");
+                    });
+                });
+            }
+        });
+    </script>
+}
+

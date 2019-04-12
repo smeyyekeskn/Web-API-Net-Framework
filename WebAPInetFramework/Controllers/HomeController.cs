@@ -14,5 +14,9 @@ namespace WebAPInetFramework.Controllers
 
             return View();
         }
+        public ActionResult Categories()
+        {
+            return View();
+        }
     }
 }
